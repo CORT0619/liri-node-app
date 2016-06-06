@@ -14,10 +14,10 @@ var client = new Twitter({
 	access_token_secret: keys.twitterKeys.access_token_secret
 });
 
-function runLiri(){
+function runLiri(input1, input2){
 
-	var action = process.argv[2];
-	var val = process.argv[3];
+	var action = input1;
+	var val = input2;
 
 	switch(action){
 		case 'my-tweets':
@@ -25,7 +25,7 @@ function runLiri(){
 		break;
 
 		case 'spotify-this-song':
-			getSpotified();
+			getSpotified(val);
 		break;
 
 		case 'movie-this':
@@ -71,11 +71,11 @@ function getTweets(){
 
 }
 
-function getSpotified(){
+function getSpotified(param){
 
-	if(val != undefined){
+	if(param != undefined){
 
-		spotify.search({type: 'track', query: val}, function(err, data){
+		spotify.search({type: 'track', query: param}, function(err, data){
 
 			if(err){
 
@@ -142,15 +142,15 @@ function doSomething(){
 			return console.log(err);
 		}
 
-		data = data.split(', ');
+		data = data.split(',');
+
+		console.log(data);
 
 		console.log(data[0]);
 
-
-
-
+		runLiri(data[0], data[1]);
 
 	});
 }
 
-runLiri();
+runLiri(process.argv[2], process.argv[3]);

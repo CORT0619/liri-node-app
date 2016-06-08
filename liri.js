@@ -92,25 +92,27 @@ function getSpotified(param){
 				return console.log(err);
 			}
 
-			//console.log(data.tracks.items[0]);
-			console.log(data.tracks.items[0].artists[0].name); // artist name
-			console.log(data.tracks.items[0].name);// song name
-			console.log(data.tracks.items[0].preview_url); //preview link			
-			console.log(data.tracks.items[0].album.name); // album name
+			console.log("Artist(s): " + data.tracks.items[0].artists[0].name); // artist name
+			console.log("Song: " + data.tracks.items[0].name);// song name
+			console.log("Preview song: " + data.tracks.items[0].preview_url); //preview link			
+			console.log("Album: " + data.tracks.items[0].album.name); // album name
 
 		});
 
 	} else {
 
-		spotify.search({type: 'track', query: 'whats my age again', limit: 1}, function(err, data){
+		spotify.get("https://api.spotify.com/v1/search?q=whats+my+age+again&type=track&limit=1", function(err, data){
+		//spotify.search({type: 'track', query: 'whats my age again', limit: 1}, function(err, data){
 
 			if(err){
 
 				return console.log(err);
 			}
 
-			console.log(data);
-			console.log("data" + data.tracks.items[0]);
+			console.log("Artist(s): " + data.tracks.items[0].artists[0].name); // artist name
+			console.log("Song: " + data.tracks.items[0].name);// song name
+			console.log("Preview song: " + data.tracks.items[0].preview_url); //preview link			
+			console.log("Album: " + data.tracks.items[0].album.name); // album name
 		});
 	}
 }
@@ -159,10 +161,8 @@ function doSomething(){
 
 		data = data.split(',');
 
-		console.log(data);
-
-		console.log(data[0]);
-		console.log(data[1]);
+		/*console.log(data[0]);
+		console.log(data[1]);*/
 
 		runLiri(data[0], data[1]);
 

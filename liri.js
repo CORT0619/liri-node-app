@@ -16,6 +16,7 @@ var client = new Twitter({
 
 function runLiri(input1, input2){
 
+
 	var action = input1;
 	var val = input2;
 
@@ -75,20 +76,33 @@ function getSpotified(param){
 
 	if(param != undefined){
 
-		spotify.search({type: 'track', query: param}, function(err, data){
+		if(process.argv.length > 4){
 
+			for(var i = 4; i < process.argv.length; i++){
+
+				param += "+" +process.argv[i];
+
+			}
+		}
+
+		//spotify.search({type: 'track', query: param, limit: 1}, function(err, data){
+		spotify.get("https://api.spotify.com/v1/search?q=" + param + "&type=track&limit=1", function(err, data){
 			if(err){
 
 				return console.log(err);
 			}
 
-			console.log(data);
-			console.log(data.tracks[0]);
+			//console.log(data.tracks.items[0]);
+			console.log(data.tracks.items[0].artists[0].name); // artist name
+			console.log(data.tracks.items[0].name);// song name
+			console.log(data.tracks.items[0].preview_url); //preview link			
+			console.log(data.tracks.items[0].album.name); // album name
+
 		});
 
 	} else {
 
-		spotify.search({type: 'track', query: 'what\'s my age again'}, function(err, data){
+		spotify.search({type: 'track', query: 'whats my age again', limit: 1}, function(err, data){
 
 			if(err){
 
@@ -96,6 +110,7 @@ function getSpotified(param){
 			}
 
 			console.log(data);
+			console.log("data" + data.tracks.items[0]);
 		});
 	}
 }
@@ -147,6 +162,7 @@ function doSomething(){
 		console.log(data);
 
 		console.log(data[0]);
+		console.log(data[1]);
 
 		runLiri(data[0], data[1]);
 
